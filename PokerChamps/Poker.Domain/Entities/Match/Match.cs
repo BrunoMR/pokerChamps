@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Poker.Domain.Entities.Match
+{
+    public class Match
+    {
+        public int BuyInQuantity { get; set; }
+
+        public decimal BuyInValue { get; set; }
+
+        public int RebuyQuantity { get; set; }
+
+        public decimal RebuyValue { get; set; }
+
+        public decimal GrossValue { get; set; }
+        
+        public decimal CashBoxSave { get; set; }
+
+        public decimal PlaceValue { get; set; }
+
+        public decimal NetValue { get; set; }
+
+        public IEnumerable<PlayerMatch> Players { get; set; }
+    }
+}
