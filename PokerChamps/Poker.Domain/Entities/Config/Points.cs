@@ -6,10 +6,35 @@
 
         public decimal Rebuy { get; set; }
 
-        public int PodiumPosition { get; set; }
+        public List<PodiumPosition> PodiumPosition { get; set; }
 
         public KoPoints Ko { get; set; }
 
-        public IEnumerable<HandsPoints> HandsPoints { get; set; }
+        public List<HandsPoints> HandsPoints { get; set; }
+
+        public Points(decimal buyIn, decimal rebuy)
+        {
+            BuyIn = buyIn;
+            Rebuy = rebuy;
+        }
+
+        public void SetPodiumPostions(PodiumPosition podiumPosition)
+        {
+            if (PodiumPosition == null)
+                PodiumPosition = new List<PodiumPosition>();
+            PodiumPosition.Add(podiumPosition);
+        }
+
+        public void SetDansPoints(HandsPoints handsPoints)
+        {
+            if(HandsPoints == null)
+                HandsPoints = new List<HandsPoints>();
+            HandsPoints.Add(handsPoints);
+        }
+
+        public void SetKoPoints(KoPoints koPoints)
+        {
+            Ko = koPoints;
+        }
     }
 }

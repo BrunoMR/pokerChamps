@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Poker.Domain.Entities.Base;
 
 namespace Poker.Domain.Entities.Match
 {
-    public class Match
+    public class Match : Entity
     {
         public int BuyInQuantity { get; set; }
 
@@ -25,5 +21,7 @@ namespace Poker.Domain.Entities.Match
         public decimal NetValue { get; set; }
 
         public IEnumerable<PlayerMatch> Players { get; set; }
+
+        public IEnumerable<Ko> Kos { get; set; }
     }
 }

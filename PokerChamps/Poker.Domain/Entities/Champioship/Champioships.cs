@@ -1,6 +1,8 @@
-﻿namespace Poker.Domain.Entities.Champioship
+﻿using Poker.Domain.Entities.Base;
+
+namespace Poker.Domain.Entities.Champioship
 {
-    public class Champioships
+    public class Champioships : Entity
     {
         public string Name { get; set; }
 

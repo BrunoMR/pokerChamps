@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Poker.Domain.Entities.Match
+﻿namespace Poker.Domain.Entities.Match
 {
-    internal class Ko
+    public class Ko
     {
+        public IEnumerable<KoPlayer> Maker { get; set; }
+
+        public IEnumerable<KoPlayer> Receiver { get; set; }
     }
 }
