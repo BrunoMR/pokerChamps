@@ -1,6 +1,6 @@
 ﻿using Poker.Domain.Enums;
 
-namespace Poker.Domain.Entities.Config
+namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class HandsPoints
     {

@@ -1,6 +1,6 @@
 ﻿using Poker.Domain.Enums;
 
-namespace Poker.Domain.Entities.Match
+namespace Poker.Domain.Entities.Match.Value_Objects
 {
     public class Hand
     {
