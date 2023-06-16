@@ -9,8 +9,9 @@ namespace Poker.Infrastructure.Repositories.MongoDB.Context
 
         public IClientSessionHandle Session { get; set; }
 
-        public MongoContext(IConfiguration configuration)
+        public MongoContext(IConfiguration configuration, IClientSessionHandle session)
         {
+            Session = session;
             var mongoClient = new MongoClient(configuration["PKC_ConnectionStringMongoDb"]);
             _database = mongoClient.GetDatabase(configuration["PKC_DatabaseName"]);
         }

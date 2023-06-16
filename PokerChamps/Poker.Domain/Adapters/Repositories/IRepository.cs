@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Poker.Domain.Entities.Base;
 
-namespace Poker.Infrastructure.Repositories
+namespace Poker.Domain.Adapters.Repositories
 {
     public interface IRepository <T> where T : Entity
     {

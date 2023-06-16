@@ -4,7 +4,7 @@
     {
         SingleFour,
         DobleFour,
-        Straight,
-        StraightFlush
+        StraightFlush,
+        RoyalStraightFlush
     }
 }

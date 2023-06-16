@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.Xml;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Bson.IO;
+using MongoDB.Driver;
 
 namespace Poker.Api
 {
@@ -24,6 +25,7 @@ namespace Poker.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the container.
+            services.AddAutoMapper(typeof(Startup));
             
             // Normal AddLogging
             services.AddLogging();
@@ -66,8 +68,33 @@ namespace Poker.Api
             });
 
             services.AddHttpContextAccessor();
+            
+            services.AddSingleton<IMongoClient>(x =>
+            {
+                // Configure the MongoDB connection settings
+                var settings = MongoClientSettings.FromConnectionString(_configuration["PKC_ConnectionStringMongoDb"]);
+
+                // Optionally, configure other settings such as read preferences, write concerns, etc.
+
+                // Create a new MongoClient instance
+                var client = new MongoClient(settings);
+
+                return client;
+            });
+            
+            // Configure the IClientSessionHandle
+            services.AddScoped<IClientSessionHandle>(x =>
+            {
+                var client = x.GetRequiredService<IMongoClient>();
+
+                // Start a new session
+                var session = client.StartSession();
+
+                return session;
+            });
 
             services.AddDependencies();
+            services.AddAutoMappers();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment env)
@@ -90,6 +117,11 @@ namespace Poker.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
