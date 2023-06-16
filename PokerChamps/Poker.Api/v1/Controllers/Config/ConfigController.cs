@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Config;
 using Poker.Domain.Entities.Config;
+using Poker.Domain.Services.Config.Interfaces;
 using Poker.Domain.Services.Shared.Interfaces;
 
 namespace Poker.Api.v1.Controllers.Config
@@ -15,15 +16,18 @@ namespace Poker.Api.v1.Controllers.Config
         private readonly IMapper _mapper;
         
         private readonly ICreateService<Configs> _createService;
+        private readonly IQueryService<Configs> _queryService;
 
-        public ConfigController(ILogger<ConfigController> logger, IMapper mapper, ICreateService<Configs> createService)
+        public ConfigController(ILogger<ConfigController> logger, IMapper mapper, 
+            ICreateService<Configs> createService,
+            IQueryService<Configs> queryService)
         {
             _logger = logger;
             _mapper = mapper;
             _createService = createService;
+            _queryService = queryService;
         }
-
-        // [HttpPost(Name = "New")]
+        
         [HttpPost]
         public async Task<ActionResult<object>> Post([FromBody] ConfigsDto configs)
         {
@@ -31,15 +35,18 @@ namespace Poker.Api.v1.Controllers.Config
             return StatusCode(!success ? 400 : 200);
         }
 
-        // [HttpGet(Name = "GetWeatherForecast")]
-        // public IEnumerable<WeatherForecast> Get()
-        // {
-        //     return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        //     {
-        //         Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-        //         TemperatureC = Random.Shared.Next(-20, 55)
-        //     })
-        //     .ToArray();
-        // }
+        [HttpGet]
+        public async Task<ObjectResult> GetAll()
+        {
+            var configsEnumerable = await _queryService.GetList(x => x.Id != null);
+            return StatusCode(200, _mapper.Map<IEnumerable<ConfigsDto>>(configsEnumerable));
+        }
+        
+        [HttpGet("{id}", Name = "GetById")]
+        public async Task<ObjectResult> Get(string id)
+        {
+            var configsEnumerable = await _queryService.Get(x => x.Id == id);
+            return StatusCode(200, _mapper.Map<ConfigsDto>(configsEnumerable));
+        }
     }
 }

@@ -16,13 +16,11 @@ namespace Poker.Api.Extensions
             // Repositories
             services.AddScoped<IMongoContext, MongoContext>();
             services.AddScoped<IRepository<Entity>, AbstractRepository<Entity>>();
-            services.AddScoped<IRepository<Configs>, AbstractRepository<Configs>>();
-
+            services.AddScoped(typeof(IRepository<>), typeof(AbstractRepository<>));
 
             // Services
-            services.AddScoped<ICreateService<Entity>, CreateService<Entity>>();
-            services.AddScoped<ICreateService<Configs>, CreateService<Configs>>();
-            //services.AddTransient<IGetAllBoardsHandler, GetAllBoardsHandler>();
+            services.AddScoped(typeof(ICreateService<>), typeof(CreateService<>));
+            services.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
 
             //filter
             //services.AddScoped<UserAuthorizationAttribute>();
