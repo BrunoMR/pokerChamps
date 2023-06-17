@@ -34,6 +34,13 @@ namespace Poker.Api.v1.Controllers.Config
             var (success, reason) = await _createService.Create(_mapper.Map<Configs>(configs));
             return StatusCode(!success ? 400 : 200);
         }
+        
+        [HttpPut]
+        public async Task<ActionResult<object>> Put([FromBody] ConfigsDto configs)
+        {
+            var (success, reason) = await _createService.Update(_mapper.Map<Configs>(configs));
+            return StatusCode(!success ? 400 : 200);
+        }
 
         [HttpGet]
         public async Task<ObjectResult> GetAll()

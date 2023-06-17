@@ -14,13 +14,11 @@ public class ConfigsProfile : Profile
         CreateMap<KoPointsDto, KoPoints>(MemberList.None).ReverseMap();
         CreateMap<HandsPointsDto, HandsPoints>(MemberList.None).ReverseMap();
         CreateMap<PricesDto, Prices>(MemberList.None).ReverseMap();
-        CreateMap<ValuesDto, Values>(MemberList.None).ReverseMap();
         CreateMap<TurnBlindsDto, TurnBlinds>(MemberList.None).ReverseMap();
         
         CreateMap<ConfigsDto, Configs>(MemberList.None)
             .ForMember(d => d.Points, o => o.MapFrom(x => x.Points))
             .ForMember(d => d.Prices, o => o.MapFrom(x => x.Prices))
-            .ForMember(d => d.Values, o => o.MapFrom(x => x.Values))
             .ForMember(d => d.TurnBlinds, o => o.MapFrom(x => x.TurnBlinds))
             .ReverseMap();
     }

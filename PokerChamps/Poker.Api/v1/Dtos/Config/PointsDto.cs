@@ -2,8 +2,6 @@
 
 public class PointsDto
 {
-    public decimal BuyIn { get; set; }
-
     public decimal Rebuy { get; set; }
 
     public List<PodiumPositionDto> PodiumPosition { get; set; }

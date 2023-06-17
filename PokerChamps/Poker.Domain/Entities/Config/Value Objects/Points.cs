@@ -2,8 +2,6 @@
 {
     public class Points
     {
-        public decimal BuyIn { get; set; }
-
         public decimal Rebuy { get; set; }
 
         public List<PodiumPosition> PodiumPosition { get; set; }
@@ -12,9 +10,8 @@
 
         public List<HandsPoints> HandsPoints { get; set; }
 
-        public Points(decimal buyIn, decimal rebuy)
+        public Points(decimal rebuy)
         {
-            BuyIn = buyIn;
             Rebuy = rebuy;
         }
 
