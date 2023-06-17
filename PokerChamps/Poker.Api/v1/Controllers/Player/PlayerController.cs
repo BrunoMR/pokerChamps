@@ -47,15 +47,15 @@ namespace Poker.Api.v1.Controllers.Player
         [HttpGet]
         public async Task<ObjectResult> GetAll()
         {
-            var configsEnumerable = await _queryService.GetList(x => x.Id != null);
-            return StatusCode(200, _mapper.Map<IEnumerable<PlayersDto>>(configsEnumerable));
+            var playersEnumerable = await _queryService.GetList(x => x.Id != null);
+            return StatusCode(200, _mapper.Map<IEnumerable<PlayersDto>>(playersEnumerable));
         }
         
         [HttpGet("{id}")]
         public async Task<ObjectResult> Get(string id)
         {
-            var configsEnumerable = await _queryService.Get(x => x.Id == id);
-            return StatusCode(200, _mapper.Map<PlayersDto>(configsEnumerable));
+            var players = await _queryService.Get(x => x.Id == id);
+            return StatusCode(200, _mapper.Map<PlayersDto>(players));
         }
     }
 }

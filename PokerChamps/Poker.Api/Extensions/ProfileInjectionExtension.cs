@@ -8,7 +8,8 @@ namespace Poker.Api.Extensions
         {
             services.AddAutoMapper(typeof(ConfigsProfile));
             services.AddAutoMapper(typeof(PlayersProfile));
-            
+            services.AddAutoMapper(typeof(ChampionshipsProfile));
+
             return services;
         }
     }

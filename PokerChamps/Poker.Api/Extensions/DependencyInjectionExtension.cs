@@ -1,6 +1,8 @@
 ﻿using Poker.Domain.Adapters.Repositories;
 using Poker.Domain.Entities.Base;
 using Poker.Domain.Entities.Config;
+using Poker.Domain.Services.Championship;
+using Poker.Domain.Services.Championship.Interfaces;
 using Poker.Domain.Services.Config.Interfaces;
 using Poker.Domain.Services.Shared;
 using Poker.Domain.Services.Shared.Interfaces;
@@ -22,6 +24,7 @@ namespace Poker.Api.Extensions
             services.AddScoped(typeof(ICreateService<>), typeof(CreateService<>));
             services.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
 
+            services.AddScoped<IChampionshipService, ChampionshipService>();
             //filter
             //services.AddScoped<UserAuthorizationAttribute>();
 

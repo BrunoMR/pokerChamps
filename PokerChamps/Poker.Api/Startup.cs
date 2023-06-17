@@ -1,6 +1,8 @@
 ﻿using Poker.Api.Extensions;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using Poker.Api.Shared;
 
 namespace Poker.Api
 {
@@ -50,6 +52,11 @@ namespace Poker.Api
             .AddJsonOptions(opt =>
             {
                 opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+
+            services.Configure<JsonOptions>(op =>
+            {
+                op.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
             });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
