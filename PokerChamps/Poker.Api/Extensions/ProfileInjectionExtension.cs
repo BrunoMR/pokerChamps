@@ -7,6 +7,7 @@ namespace Poker.Api.Extensions
         public static IServiceCollection AddAutoMappers(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ConfigsProfile));
+            services.AddAutoMapper(typeof(PlayersProfile));
             
             return services;
         }

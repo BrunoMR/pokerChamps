@@ -2,7 +2,8 @@
 
 public class ConfigsDto
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
+    
     public PointsDto Points { get; set; }
     
     public PricesDto Prices { get; set; }

@@ -35,10 +35,13 @@ namespace Poker.Api.v1.Controllers.Config
             return StatusCode(!success ? 400 : 200);
         }
         
-        [HttpPut]
-        public async Task<ActionResult<object>> Put([FromBody] ConfigsDto configs)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<object>> Put([FromBody] ConfigsDto configsDto, string id)
         {
-            var (success, reason) = await _createService.Update(_mapper.Map<Configs>(configs));
+            var configs = _mapper.Map<Configs>(configsDto);
+            configs.SetId(id);
+            
+            var (success, reason) = await _createService.Update(configs);
             return StatusCode(!success ? 400 : 200);
         }
 
@@ -49,7 +52,7 @@ namespace Poker.Api.v1.Controllers.Config
             return StatusCode(200, _mapper.Map<IEnumerable<ConfigsDto>>(configsEnumerable));
         }
         
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}")]
         public async Task<ObjectResult> Get(string id)
         {
             var configsEnumerable = await _queryService.Get(x => x.Id == id);

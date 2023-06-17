@@ -11,6 +11,11 @@ namespace Poker.Domain.Entities.Config
 
         public List<TurnBlinds> TurnBlinds { get; set; }
 
+        public void SetId(string id)
+        {
+            Id = id;
+        }
+
         public void SetPoints(Points points)
         {
             Points = points;

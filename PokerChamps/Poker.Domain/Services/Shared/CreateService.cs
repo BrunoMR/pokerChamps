@@ -1,6 +1,5 @@
 ﻿using Poker.Domain.Adapters.Repositories;
 using Poker.Domain.Entities.Base;
-using Poker.Domain.Services.Config.Interfaces;
 using Poker.Domain.Services.Shared.Interfaces;
 
 namespace Poker.Domain.Services.Shared;

@@ -1,12 +1,5 @@
-﻿using System.Net.Mime;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Poker.Api.Extensions;
+﻿using Poker.Api.Extensions;
 using System.Text.Json.Serialization;
-using System.Xml;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using MongoDB.Bson.IO;
 using MongoDB.Driver;
 
 namespace Poker.Api
