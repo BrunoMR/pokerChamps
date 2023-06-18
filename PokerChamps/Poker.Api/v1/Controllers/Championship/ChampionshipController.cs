@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Championship;
 using Poker.Domain.Entities.Championship;
 using Poker.Domain.Services.Championship.Interfaces;
-using Poker.Domain.Services.Config.Interfaces;
 using Poker.Domain.Services.Shared.Interfaces;
 
 namespace Poker.Api.v1.Controllers.Championship
@@ -60,7 +59,7 @@ namespace Poker.Api.v1.Controllers.Championship
         }
         
         [HttpPost("ByConditions")]
-        public async Task<ObjectResult> PostByConditions([FromBody] ChampionshipsDto championshipsDto)
+        public async Task<ObjectResult> AllByConditions([FromBody] ChampionshipsDto championshipsDto)
         {
             var championshipsEnumerable = await _championshipService.GetList(_mapper.Map<Championships>(championshipsDto));
             return StatusCode(200, _mapper.Map<IEnumerable<ChampionshipsDto>>(championshipsEnumerable));
