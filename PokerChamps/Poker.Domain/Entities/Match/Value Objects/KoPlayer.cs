@@ -6,6 +6,11 @@ namespace Poker.Domain.Entities.Match.Value_Objects
     {
         public Players Player { get; set; }
 
-        public double Percent { get; set; }
+        public double? Percent { get; set; }
+
+        public void SetPercent(int amoutPlayers)
+        {
+            Percent = 100 / amoutPlayers;
+        }
     }
 }

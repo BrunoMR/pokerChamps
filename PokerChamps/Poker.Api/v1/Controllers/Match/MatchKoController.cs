@@ -1,7 +1,10 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Match.Create;
+using Poker.Api.v1.Dtos.Match.Ko;
+using Poker.Domain.Entities.Match.Value_Objects;
 using Poker.Domain.Services.Config.Interfaces;
+using Poker.Domain.Services.Match.Interfaces;
 using Poker.Domain.Services.Shared.Interfaces;
 
 namespace Poker.Api.v1.Controllers.Match
@@ -13,23 +16,23 @@ namespace Poker.Api.v1.Controllers.Match
     {
         private readonly ILogger<MatchKoController> _logger;
         private readonly IMapper _mapper;
-        private readonly ICreateService<Domain.Entities.Match.Match> _createService;
+        private readonly IMatchKoService _matchKoService;
         private readonly IQueryService<Domain.Entities.Match.Match> _queryService;
-    
+        
         public MatchKoController(ILogger<MatchKoController> logger, IMapper mapper, 
-            ICreateService<Domain.Entities.Match.Match> createService,
-            IQueryService<Domain.Entities.Match.Match> queryService)
+            IMatchKoService matchKoService,
+                IQueryService<Domain.Entities.Match.Match> queryService)
         {
             _logger = logger;
             _mapper = mapper;
-            _createService = createService;
+            _matchKoService = matchKoService;
             _queryService = queryService;
         }
         
-        [HttpPost]
-        public async Task<ActionResult<object>> NewKo([FromBody] MatchCreateDto matchCreateDto)
+        [HttpPost("{matchId}")]
+        public async Task<ActionResult<object>> NewKo([FromBody] KoDto koDto, string matchId)
         {
-            var (success, reason) = await _createService.Create(_mapper.Map<Domain.Entities.Match.Match>(matchCreateDto));
+            var (success, reason) = await _matchKoService.NewKo(_mapper.Map<Ko>(koDto), matchId);
             return StatusCode(!success ? 400 : 200);
         }
     }

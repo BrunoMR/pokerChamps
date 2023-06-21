@@ -1,8 +1,8 @@
-﻿using Poker.Api.v1.Dtos.Player;
-
-namespace Poker.Api.v1.Dtos.Match.Create;
+﻿namespace Poker.Api.v1.Dtos.Match.Create;
 
 public class PlayerMatchCreateDto
 {
-    public PlayersDto Player { get; set; }   
+    public string PlayersId { get; set; }
+    
+    public string Name { get; set; }   
 }

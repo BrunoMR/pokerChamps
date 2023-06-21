@@ -1,9 +1,10 @@
 ﻿using Poker.Domain.Adapters.Repositories;
 using Poker.Domain.Entities.Base;
-using Poker.Domain.Entities.Config;
 using Poker.Domain.Services.Championship;
 using Poker.Domain.Services.Championship.Interfaces;
 using Poker.Domain.Services.Config.Interfaces;
+using Poker.Domain.Services.Match;
+using Poker.Domain.Services.Match.Interfaces;
 using Poker.Domain.Services.Shared;
 using Poker.Domain.Services.Shared.Interfaces;
 using Poker.Infrastructure.Repositories;
@@ -20,11 +21,14 @@ namespace Poker.Api.Extensions
             services.AddScoped<IRepository<Entity>, AbstractRepository<Entity>>();
             services.AddScoped(typeof(IRepository<>), typeof(AbstractRepository<>));
 
-            // Services
+            // Services shared
             services.AddScoped(typeof(ICreateService<>), typeof(CreateService<>));
             services.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
 
+            // Services
             services.AddScoped<IChampionshipService, ChampionshipService>();
+            services.AddScoped<IMatchKoService, MatchKoService>();
+            
             //filter
             //services.AddScoped<UserAuthorizationAttribute>();
 
