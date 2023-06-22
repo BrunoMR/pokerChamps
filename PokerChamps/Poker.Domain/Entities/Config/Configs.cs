@@ -10,6 +10,8 @@ namespace Poker.Domain.Entities.Config
         public Prices Prices { get; set; }
 
         public List<TurnBlinds> TurnBlinds { get; set; }
+        
+        public List<Prizes> Prizes { get; set; }
 
         public void SetId(string id)
         {

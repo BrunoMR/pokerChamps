@@ -1,11 +1,14 @@
-﻿namespace Poker.Domain.Entities.Match.Value_Objects
+﻿using Poker.Domain.Entities.Config.Value_Objects;
+using Poker.Domain.Enums;
+
+namespace Poker.Domain.Entities.Match.Value_Objects
 {
     public class PlayerMatch
     {
         public string PlayersId { get; set; }
-        
+
         public string Name { get; set; }
-        
+
         //todo: remove set
         public double KoQuantity { get; set; }
 
@@ -13,7 +16,7 @@
         public int RebuyQuantity { get; set; }
 
         //todo: remove set
-        public IEnumerable<Hand> Hands { get; set; }
+        public IList<Hand> SpecialHands { get; set; }
 
         //todo: remove set
         public double Points { get; set; }
@@ -23,7 +26,7 @@
 
         //todo: remove set
         public decimal Prize { get; set; }
-        
+
         //todo: remove set
         public decimal Charge { get; set; }
 
@@ -39,10 +42,25 @@
             Points += points;
             Charge += price;
         }
-        
+
         public void AddBuyIn(decimal price)
         {
             Charge += price;
+        }
+
+        public void AddSpecialHand(HandsEnum hand, int points)
+        {
+            if (SpecialHands == null)
+                SpecialHands = new List<Hand>();
+
+            var specialHand = SpecialHands.FirstOrDefault(x => x.HandsEnum.ToString() == hand.ToString());
+
+            if (specialHand == null)
+                SpecialHands.Add(new Hand(hand.ToString()));
+            else
+                specialHand.AddQuantity();
+            
+            Points += points;
         }
     }
 }
