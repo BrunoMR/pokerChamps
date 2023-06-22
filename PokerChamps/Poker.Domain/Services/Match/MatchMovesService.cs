@@ -35,7 +35,7 @@ public class MatchMovesService : IMatchMovesService
         {
             match.Players
                 ?.FirstOrDefault(p => p.PlayersId == maker.Id)
-                ?.AddKo(ko.PointsByMaker);
+                ?.AddKo(ko.PointsByMaker, ko.Receiver.Count());
         }
 
         return await _matchUpInsertService.Update(match);
@@ -59,8 +59,7 @@ public class MatchMovesService : IMatchMovesService
         return await _matchUpInsertService.Update(match);
     }
 
-    public async Task<(bool success, string reason)> NewSpecialHand(PlayerSpecialHandModel playerSpecialHand,
-        string matchId)
+    public async Task<(bool success, string reason)> NewSpecialHand(PlayerSpecialHandModel playerSpecialHand, string matchId)
     {
         var match = await _matchQueryService.Get(x => x.Id == matchId);
         var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);

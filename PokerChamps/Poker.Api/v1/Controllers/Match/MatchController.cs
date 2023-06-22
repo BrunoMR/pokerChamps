@@ -1,7 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Match.Create;
+using Poker.Api.v1.Dtos.Match.Position;
 using Poker.Api.v1.Dtos.Match.Query;
+using Poker.Domain.Entities.Match.Value_Objects;
 using Poker.Domain.Services.Config.Interfaces;
 using Poker.Domain.Services.Match.Interfaces;
 
@@ -31,6 +33,13 @@ namespace Poker.Api.v1.Controllers.Match
         public async Task<ActionResult<object>> Post([FromBody] MatchCreateDto matchCreateDto)
         {
             var (success, reason) = await _matchService.Create(_mapper.Map<Domain.Entities.Match.Match>(matchCreateDto));
+            return StatusCode(!success ? 400 : 200);
+        }
+        
+        [HttpPost("{matchId}/set-players-positions")]
+        public async Task<ActionResult<object>> SetPlayerPosition([FromBody] IEnumerable<PlayersPositionDto> playersPositionDtos, string matchId)
+        {
+            var (success, reason) = await _matchService.SetPlayersPosition(_mapper.Map<IEnumerable<PlayerMatch>>(playersPositionDtos), matchId);
             return StatusCode(!success ? 400 : 200);
         }
         

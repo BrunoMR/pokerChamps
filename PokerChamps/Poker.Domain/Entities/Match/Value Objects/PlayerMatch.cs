@@ -1,5 +1,4 @@
-﻿using Poker.Domain.Entities.Config.Value_Objects;
-using Poker.Domain.Enums;
+﻿using Poker.Domain.Enums;
 
 namespace Poker.Domain.Entities.Match.Value_Objects
 {
@@ -22,18 +21,18 @@ namespace Poker.Domain.Entities.Match.Value_Objects
         public double Points { get; set; }
 
         //todo: remove set
-        public int Position { get; set; }
+        public int? Position { get; set; }
 
         //todo: remove set
-        public decimal Prize { get; set; }
+        public decimal? Prize { get; set; }
 
         //todo: remove set
         public decimal Charge { get; set; }
 
-        public void AddKo(double pointsToAdd)
+        public void AddKo(double pointsToAdd, int koQuantity)
         {
-            KoQuantity += 1;
             Points += pointsToAdd;
+            KoQuantity += koQuantity;
         }
 
         public void AddRebuy(double points, decimal price)
@@ -61,6 +60,12 @@ namespace Poker.Domain.Entities.Match.Value_Objects
                 specialHand.AddQuantity();
             
             Points += points;
+        }
+
+        public void SetPosition(int position, int? points)
+        {
+            Position = position;
+            Points += points ?? 10;
         }
     }
 }
