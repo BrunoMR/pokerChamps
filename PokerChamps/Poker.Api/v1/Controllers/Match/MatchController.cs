@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Match.Create;
 using Poker.Api.v1.Dtos.Match.Query;
 using Poker.Domain.Services.Config.Interfaces;
-using Poker.Domain.Services.Shared.Interfaces;
+using Poker.Domain.Services.Match.Interfaces;
 
 namespace Poker.Api.v1.Controllers.Match
 {
@@ -14,23 +14,23 @@ namespace Poker.Api.v1.Controllers.Match
     {
         private readonly ILogger<MatchController> _logger;
         private readonly IMapper _mapper;
-        private readonly ICreateService<Domain.Entities.Match.Match> _createService;
+        private readonly IMatchService _matchService;
         private readonly IQueryService<Domain.Entities.Match.Match> _queryService;
     
         public MatchController(ILogger<MatchController> logger, IMapper mapper, 
-            ICreateService<Domain.Entities.Match.Match> createService,
+            IMatchService matchService,
             IQueryService<Domain.Entities.Match.Match> queryService)
         {
             _logger = logger;
             _mapper = mapper;
-            _createService = createService;
+            _matchService = matchService;
             _queryService = queryService;
         }
         
         [HttpPost]
         public async Task<ActionResult<object>> Post([FromBody] MatchCreateDto matchCreateDto)
         {
-            var (success, reason) = await _createService.Create(_mapper.Map<Domain.Entities.Match.Match>(matchCreateDto));
+            var (success, reason) = await _matchService.Create(_mapper.Map<Domain.Entities.Match.Match>(matchCreateDto));
             return StatusCode(!success ? 400 : 200);
         }
         
@@ -39,13 +39,6 @@ namespace Poker.Api.v1.Controllers.Match
         {
             var matchs = await _queryService.GetList(x => x.ChampionshipId == championshipsId);
             return StatusCode(200, _mapper.Map<MatchDto>(matchs));
-        }
-        
-        [HttpPost("NewKo")]
-        public async Task<ActionResult<object>> NewKo([FromBody] MatchCreateDto matchCreateDto)
-        {
-            var (success, reason) = await _createService.Create(_mapper.Map<Domain.Entities.Match.Match>(matchCreateDto));
-            return StatusCode(!success ? 400 : 200);
         }
     }
 }

@@ -14,23 +14,23 @@ namespace Poker.Api.v1.Controllers.Championship
     {
         private readonly ILogger<ChampionshipController> _logger;
         private readonly IMapper _mapper;
-        private readonly ICreateService<Championships> _createService;
+        private readonly IUpInsertService<Championships> _upInsertService;
         private readonly IChampionshipService _championshipService;
 
         public ChampionshipController(ILogger<ChampionshipController> logger, IMapper mapper, 
-            ICreateService<Championships> createService,
+            IUpInsertService<Championships> upInsertService,
             IChampionshipService championshipService)
         {
             _logger = logger;
             _mapper = mapper;
-            _createService = createService;
+            _upInsertService = upInsertService;
             _championshipService = championshipService;
         }
 
         [HttpPost]
         public async Task<ActionResult<object>> Post([FromBody] ChampionshipsDto championshipsDto)
         {
-            var (success, reason) = await _createService.Create(_mapper.Map<Championships>(championshipsDto));
+            var (success, reason) = await _upInsertService.Create(_mapper.Map<Championships>(championshipsDto));
             return StatusCode(!success ? 400 : 200);
         }
         
@@ -40,7 +40,7 @@ namespace Poker.Api.v1.Controllers.Championship
             var championships = _mapper.Map<Championships>(championshipsDto);
             championships.SetId(id);
             
-            var (success, reason) = await _createService.Update(championships);
+            var (success, reason) = await _upInsertService.Update(championships);
             return StatusCode(!success ? 400 : 200);
         }
 

@@ -22,11 +22,12 @@ namespace Poker.Api.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(AbstractRepository<>));
 
             // Services shared
-            services.AddScoped(typeof(ICreateService<>), typeof(CreateService<>));
+            services.AddScoped(typeof(IUpInsertService<>), typeof(UpInsertService<>));
             services.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
 
             // Services
             services.AddScoped<IChampionshipService, ChampionshipService>();
+            services.AddScoped<IMatchService, MatchService>();
             services.AddScoped<IMatchKoService, MatchKoService>();
             services.AddScoped<IMatchRebuyService, MatchRebuyService>();
             

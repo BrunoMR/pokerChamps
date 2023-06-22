@@ -10,15 +10,15 @@ public class MatchKoService : IMatchKoService
 {
     private readonly IQueryService<Entities.Match.Match> _matchQueryService;
     private readonly IQueryService<Configs> _configsQueryService;
-    private readonly ICreateService<Entities.Match.Match> _matchCreateService;
+    private readonly IUpInsertService<Entities.Match.Match> _matchUpInsertService;
 
     public MatchKoService(IQueryService<Entities.Match.Match> matchQueryService,
         IQueryService<Configs> configsQueryService,
-        ICreateService<Entities.Match.Match> matchCreateService)
+        IUpInsertService<Entities.Match.Match> matchUpInsertService)
     {
         _matchQueryService = matchQueryService;
         _configsQueryService = configsQueryService;
-        _matchCreateService = matchCreateService;
+        _matchUpInsertService = matchUpInsertService;
     }
     
     public async Task<(bool success, string reason)> NewKo(Ko ko, string matchId)
@@ -36,6 +36,6 @@ public class MatchKoService : IMatchKoService
                 ?.AddKo(ko.PointsByMaker);
         }
 
-        return await _matchCreateService.Update(match);
+        return await _matchUpInsertService.Update(match);
     }
 }

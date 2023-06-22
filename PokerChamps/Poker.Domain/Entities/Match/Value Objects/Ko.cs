@@ -8,7 +8,6 @@ namespace Poker.Domain.Entities.Match.Value_Objects
 
         //todo: remove set
         public double PointsByMaker { get; set; }
-        // => 15 / Maker.Count();
 
         public IEnumerable<Players> Receiver { get; set; }
 

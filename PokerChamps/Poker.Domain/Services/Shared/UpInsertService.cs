@@ -4,11 +4,11 @@ using Poker.Domain.Services.Shared.Interfaces;
 
 namespace Poker.Domain.Services.Shared;
 
-public class CreateService<T> : ICreateService<T> where T : Entity
+public class UpInsertService<T> : IUpInsertService<T> where T : Entity
 {
     private readonly IRepository<T> _repository;
 
-    public CreateService(IRepository<T> repository)
+    public UpInsertService(IRepository<T> repository)
     {
         _repository = repository;
     }

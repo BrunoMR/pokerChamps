@@ -6,9 +6,9 @@ namespace Poker.Domain.Entities.Match
     public class Match : Entity
     {
         public string? ChampionshipId { get; set; }
-        
+
         public string? ConfigId { get; set; }
-        
+
         //todo: remove set
         public int BuyInQuantity { get; set; }
 
@@ -22,7 +22,7 @@ namespace Poker.Domain.Entities.Match
         public decimal RebuyValue { get; set; }
 
         public decimal GrossValue { get; set; }
-        
+
         public decimal CashBoxSave { get; set; }
 
         public decimal PlaceValue { get; set; }
@@ -34,6 +34,13 @@ namespace Poker.Domain.Entities.Match
         //todo: remove set
         public IList<Ko>? Kos { get; set; }
 
+        public void AddBuyIn(int quantity, decimal price)
+        {
+            BuyInQuantity += quantity;
+            BuyInValue = BuyInQuantity * price;
+            AddToGrossValue(quantity * price);
+        }
+
         public void AddKo(Ko newKo)
         {
             if (Kos == null)
@@ -41,9 +48,22 @@ namespace Poker.Domain.Entities.Match
             Kos.Add(newKo);
         }
 
-        public void AddRebuy()
+        public void AddRebuy(int quantity, decimal rebuyPrice)
         {
-            RebuyQuantity += 1;
+            RebuyQuantity += quantity;
+            RebuyValue = RebuyQuantity * rebuyPrice;
+            AddToGrossValue(quantity * rebuyPrice);
+        }
+
+        public void CalculateNetValue(decimal percentCashBox)
+        {
+            CashBoxSave = GrossValue * percentCashBox / 100;
+            NetValue = GrossValue - (CashBoxSave + PlaceValue);
+        }
+
+        private void AddToGrossValue(decimal value)
+        {
+            GrossValue += value;
         }
     }
 }

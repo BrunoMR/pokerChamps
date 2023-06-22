@@ -15,23 +15,23 @@ namespace Poker.Api.v1.Controllers.Config
         private readonly ILogger<ConfigController> _logger;
         private readonly IMapper _mapper;
         
-        private readonly ICreateService<Configs> _createService;
+        private readonly IUpInsertService<Configs> _upInsertService;
         private readonly IQueryService<Configs> _queryService;
 
         public ConfigController(ILogger<ConfigController> logger, IMapper mapper, 
-            ICreateService<Configs> createService,
+            IUpInsertService<Configs> upInsertService,
             IQueryService<Configs> queryService)
         {
             _logger = logger;
             _mapper = mapper;
-            _createService = createService;
+            _upInsertService = upInsertService;
             _queryService = queryService;
         }
         
         [HttpPost]
         public async Task<ActionResult<object>> Post([FromBody] ConfigsDto configs)
         {
-            var (success, reason) = await _createService.Create(_mapper.Map<Configs>(configs));
+            var (success, reason) = await _upInsertService.Create(_mapper.Map<Configs>(configs));
             return StatusCode(!success ? 400 : 200);
         }
         
@@ -41,7 +41,7 @@ namespace Poker.Api.v1.Controllers.Config
             var configs = _mapper.Map<Configs>(configsDto);
             configs.SetId(id);
             
-            var (success, reason) = await _createService.Update(configs);
+            var (success, reason) = await _upInsertService.Update(configs);
             return StatusCode(!success ? 400 : 200);
         }
 

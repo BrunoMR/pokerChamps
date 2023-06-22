@@ -2,7 +2,7 @@
 
 namespace Poker.Domain.Services.Shared.Interfaces;
 
-public interface ICreateService<TEntity> where TEntity : Entity 
+public interface IUpInsertService<TEntity> where TEntity : Entity 
 {
     Task<(bool success, string reason)> Create(TEntity entity);
     

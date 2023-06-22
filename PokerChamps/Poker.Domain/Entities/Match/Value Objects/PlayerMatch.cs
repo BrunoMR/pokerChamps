@@ -39,5 +39,10 @@
             Points += points;
             Charge += price;
         }
+        
+        public void AddBuyIn(decimal price)
+        {
+            Charge += price;
+        }
     }
 }
