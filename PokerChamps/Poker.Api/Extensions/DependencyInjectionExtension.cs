@@ -28,6 +28,7 @@ namespace Poker.Api.Extensions
             // Services
             services.AddScoped<IChampionshipService, ChampionshipService>();
             services.AddScoped<IMatchKoService, MatchKoService>();
+            services.AddScoped<IMatchRebuyService, MatchRebuyService>();
             
             //filter
             //services.AddScoped<UserAuthorizationAttribute>();

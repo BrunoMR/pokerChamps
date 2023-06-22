@@ -1,6 +1,4 @@
-﻿using Poker.Domain.Entities.Player;
-
-namespace Poker.Domain.Entities.Match.Value_Objects
+﻿namespace Poker.Domain.Entities.Match.Value_Objects
 {
     public class PlayerMatch
     {
@@ -25,11 +23,21 @@ namespace Poker.Domain.Entities.Match.Value_Objects
 
         //todo: remove set
         public decimal Prize { get; set; }
+        
+        //todo: remove set
+        public decimal Charge { get; set; }
 
         public void AddKo(double pointsToAdd)
         {
             KoQuantity += 1;
             Points += pointsToAdd;
+        }
+
+        public void AddRebuy(double points, decimal price)
+        {
+            RebuyQuantity += 1;
+            Points += points;
+            Charge += price;
         }
     }
 }

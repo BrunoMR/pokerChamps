@@ -17,4 +17,4 @@ namespace Poker.Domain.Entities.Match.Value_Objects
             PointsByMaker = points / Maker.Count();
         }
     }
-}
+} 

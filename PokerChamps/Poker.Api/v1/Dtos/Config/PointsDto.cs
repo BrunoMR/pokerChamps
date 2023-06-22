@@ -2,7 +2,7 @@
 
 public class PointsDto
 {
-    public decimal Rebuy { get; set; }
+    public double Rebuy { get; set; }
 
     public List<PodiumPositionDto> PodiumPosition { get; set; }
 
