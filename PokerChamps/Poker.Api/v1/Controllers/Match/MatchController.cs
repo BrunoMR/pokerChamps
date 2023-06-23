@@ -43,6 +43,13 @@ namespace Poker.Api.v1.Controllers.Match
             return StatusCode(!success ? 400 : 200);
         }
         
+        [HttpPut("{id}")]
+        public async Task<ActionResult<object>> EndGame(string id)
+        {
+            var (success, reason) = await _matchService.EndGame(id);
+            return StatusCode(!success ? 400 : 200);
+        }
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<object>> GetById(string id)
         {

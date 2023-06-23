@@ -25,8 +25,7 @@ public class MatchMovesService : IMatchMovesService
 
     public async Task<(bool success, string reason)> NewKo(Ko ko, string matchId)
     {
-        var match = await _matchQueryService.Get(x => x.Id == matchId);
-        var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
+        var (match, config) = await getMatchAndConfig(matchId);
 
         ko.SetPointsByMaker(config.Points.Ko.Maker);
         match.AddKo(ko);
@@ -44,8 +43,7 @@ public class MatchMovesService : IMatchMovesService
 
     public async Task<(bool success, string reason)> NewRebuys(IEnumerable<Players> players, string matchId)
     {
-        var match = await _matchQueryService.Get(x => x.Id == matchId);
-        var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
+        var (match, config) = await getMatchAndConfig(matchId);
 
         match.AddRebuy(players.Count(), config.Prices.Rebuy);
         match.CalculateNetValue(config.Prices.CashBox);
@@ -63,8 +61,7 @@ public class MatchMovesService : IMatchMovesService
     public async Task<(bool success, string reason)> NewSpecialHand(PlayerSpecialHandModel playerSpecialHand,
         string matchId)
     {
-        var match = await _matchQueryService.Get(x => x.Id == matchId);
-        var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
+        var (match, config) = await getMatchAndConfig(matchId);
 
         var pointsToAdd = config.Points.HandsPoints.FirstOrDefault(x => x.Type == playerSpecialHand.HandsEnum).Value;
 
@@ -74,5 +71,12 @@ public class MatchMovesService : IMatchMovesService
 
 
         return await _matchUpInsertService.Update(match);
+    }
+
+    private async Task<(Entities.Match.Match, Configs)> getMatchAndConfig(string matchId)
+    {
+        var match = await _matchQueryService.Get(x => x.Id == matchId);
+        var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
+        return (match, config);
     }
 }

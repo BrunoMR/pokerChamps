@@ -24,7 +24,7 @@ namespace Poker.Domain.Entities.Match.Value_Objects
         public int? Position { get; set; }
 
         //todo: remove set
-        public decimal? Prize { get; set; }
+        public decimal Prize { get; set; }
 
         //todo: remove set
         public decimal Charge { get; set; }
@@ -66,6 +66,11 @@ namespace Poker.Domain.Entities.Match.Value_Objects
         {
             Position = position;
             Points += points ?? 10;
+        }
+
+        public void SetPrize(decimal netValue, decimal percentPrize)
+        {
+            Prize = netValue * percentPrize / 100;
         }
     }
 }

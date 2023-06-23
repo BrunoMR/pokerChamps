@@ -39,8 +39,7 @@ public class MatchService : IMatchService
     public async Task<(bool success, string reason)> SetPlayersPosition(IEnumerable<PlayerMatch> playersMatch,
         string matchId)
     {
-        var match = await _matchQueryService.Get(x => x.Id == matchId);
-        var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
+        var (match, config) = await getMatchAndConfig(matchId);
 
         foreach (var player in playersMatch)
         {
@@ -52,5 +51,25 @@ public class MatchService : IMatchService
         }
 
         return await _matchUpInsertService.Update(match);
+    }
+
+    public async Task<(bool success, string reason)> EndGame(string id)
+    {
+        var (match, config) = await getMatchAndConfig(id);
+
+        foreach (var award in config.Prizes)
+        {
+            var playerPositionToAwarded = match.Players.FirstOrDefault(x => x.Position == award.Position);
+            playerPositionToAwarded.SetPrize(match.NetValue, award.Value);
+        }
+
+        return await _matchUpInsertService.Update(match);
+    }
+
+    private async Task<(Entities.Match.Match, Configs)> getMatchAndConfig(string id)
+    {
+        var match = await _matchQueryService.Get(x => x.Id == id);
+        var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
+        return (match, config);
     }
 }
