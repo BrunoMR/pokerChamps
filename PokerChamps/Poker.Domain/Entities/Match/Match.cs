@@ -5,6 +5,8 @@ namespace Poker.Domain.Entities.Match
 {
     public class Match : Entity
     {
+        public bool IsOpen { get; set; } = true;
+        
         public string? ChampionshipId { get; set; }
 
         public string? ConfigId { get; set; }
@@ -59,6 +61,11 @@ namespace Poker.Domain.Entities.Match
         {
             CashBoxSave = GrossValue * percentCashBox / 100;
             NetValue = GrossValue - (CashBoxSave + PlaceValue);
+        }
+
+        public void EndGame()
+        {
+            IsOpen = false;
         }
 
         private void AddToGrossValue(decimal value)

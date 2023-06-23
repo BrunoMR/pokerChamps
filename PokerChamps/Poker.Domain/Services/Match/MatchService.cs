@@ -40,11 +40,16 @@ public class MatchService : IMatchService
         string matchId)
     {
         var (match, config) = await getMatchAndConfig(matchId);
+        var matchIsValid = validateMatch(match);
+
+        if (!matchIsValid.Item1)
+            return matchIsValid;
 
         foreach (var player in playersMatch)
         {
-            var pointsByPosition = config.Points.PodiumPosition.FirstOrDefault(x => x.Position == player.Position)?.Points;
-            
+            var pointsByPosition =
+                config.Points.PodiumPosition.FirstOrDefault(x => x.Position == player.Position)?.Points;
+
             match.Players
                 ?.FirstOrDefault(p => p.PlayersId == player.PlayersId)
                 ?.SetPosition((int)player.Position, pointsByPosition);
@@ -56,6 +61,10 @@ public class MatchService : IMatchService
     public async Task<(bool success, string reason)> EndGame(string id)
     {
         var (match, config) = await getMatchAndConfig(id);
+        var matchIsValid = validateMatch(match);
+
+        if (!matchIsValid.Item1)
+            return matchIsValid;
 
         foreach (var award in config.Prizes)
         {
@@ -63,13 +72,21 @@ public class MatchService : IMatchService
             playerPositionToAwarded.SetPrize(match.NetValue, award.Value);
         }
 
+        match.EndGame();
         return await _matchUpInsertService.Update(match);
     }
 
     private async Task<(Entities.Match.Match, Configs)> getMatchAndConfig(string id)
     {
-        var match = await _matchQueryService.Get(x => x.Id == id);
+        var match = await _matchQueryService.Get(x => x.Id == id && x.IsOpen);
+        if (match is null)
+            return (null, null);
         var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
         return (match, config);
+    }
+
+    private (bool, string) validateMatch(Entities.Match.Match match)
+    {
+        return match is null ? (false, "Jogo não encontrado ou já encerrado!") : (true, string.Empty);
     }
 }
