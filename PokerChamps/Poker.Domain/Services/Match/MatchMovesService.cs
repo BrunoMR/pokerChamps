@@ -31,11 +31,12 @@ public class MatchMovesService : IMatchMovesService
         ko.SetPointsByMaker(config.Points.Ko.Maker);
         match.AddKo(ko);
 
-        foreach (var maker in ko.Maker)
+        var quantityReceivers = ko.Receivers.Count();
+        foreach (var maker in ko.Makers)
         {
             match.Players
                 ?.FirstOrDefault(p => p.PlayersId == maker.Id)
-                ?.AddKo(ko.PointsByMaker, ko.Receiver.Count());
+                ?.AddKo(ko.PointsByMaker * quantityReceivers, quantityReceivers);
         }
 
         return await _matchUpInsertService.Update(match);
@@ -59,13 +60,14 @@ public class MatchMovesService : IMatchMovesService
         return await _matchUpInsertService.Update(match);
     }
 
-    public async Task<(bool success, string reason)> NewSpecialHand(PlayerSpecialHandModel playerSpecialHand, string matchId)
+    public async Task<(bool success, string reason)> NewSpecialHand(PlayerSpecialHandModel playerSpecialHand,
+        string matchId)
     {
         var match = await _matchQueryService.Get(x => x.Id == matchId);
         var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
 
         var pointsToAdd = config.Points.HandsPoints.FirstOrDefault(x => x.Type == playerSpecialHand.HandsEnum).Value;
-        
+
         match.Players
             ?.FirstOrDefault(p => p.PlayersId == playerSpecialHand.PlayersId)
             ?.AddSpecialHand(playerSpecialHand.HandsEnum, pointsToAdd);

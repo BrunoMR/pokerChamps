@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Poker.Api.v1.Dtos.Match.Create;
+using Poker.Api.v1.Dtos.Match.Ko;
 using Poker.Api.v1.Dtos.Match.Position;
 using Poker.Api.v1.Dtos.Match.Query;
 using Poker.Api.v1.Dtos.Match.SpecialHand;
@@ -20,7 +21,14 @@ public class MatchProfile : Profile
         CreateMap<PlayersPositionDto, PlayerMatch>(MemberList.None)
             .ForMember(d => d.PlayersId, o => o.MapFrom(x => x.Id))
             .ReverseMap();
+        
+        CreateMap<HandDto, Hand>(MemberList.None).ReverseMap();
+        CreateMap<PlayerMatchDto, PlayerMatch>(MemberList.None).ReverseMap();
+        CreateMap<KoQueryDto, Ko>(MemberList.None).ReverseMap();
 
-        CreateMap<MatchDto, Match>(MemberList.None).ReverseMap();
+        CreateMap<MatchDto, Match>(MemberList.None)
+            .ForMember(d => d.Players, o => o.MapFrom(x=> x.Players))
+            .ForMember(d => d.Kos, o => o.MapFrom(x => x.Kos))
+            .ReverseMap();
     }
 }

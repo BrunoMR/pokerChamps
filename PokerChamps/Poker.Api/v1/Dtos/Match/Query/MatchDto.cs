@@ -1,4 +1,6 @@
-﻿namespace Poker.Api.v1.Dtos.Match.Query;
+﻿using Poker.Api.v1.Dtos.Match.Ko;
+
+namespace Poker.Api.v1.Dtos.Match.Query;
 
 public class MatchDto
 {
@@ -22,7 +24,7 @@ public class MatchDto
 
     public decimal? NetValue { get; set; }
 
-    // public IEnumerable<PlayerMatch>? Players { get; set; }
-    //
-    // public IEnumerable<Ko>? Kos { get; set; }
+    public IEnumerable<PlayerMatchDto>? Players { get; set; }
+    
+    public IEnumerable<KoQueryDto>? Kos { get; set; }
 }

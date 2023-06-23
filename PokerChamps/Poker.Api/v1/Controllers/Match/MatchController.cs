@@ -43,11 +43,18 @@ namespace Poker.Api.v1.Controllers.Match
             return StatusCode(!success ? 400 : 200);
         }
         
-        [HttpGet("{championshipsId}")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<object>> GetById(string id)
+        {
+            var match = await _queryService.Get(x => x.Id == id);
+            return StatusCode(200, _mapper.Map<MatchDto>(match));
+        }
+        
+        [HttpGet("byChampionshipId/{championshipsId}")]
         public async Task<ActionResult<object>> GetAllByChampionshipId(string championshipsId)
         {
             var matchs = await _queryService.GetList(x => x.ChampionshipId == championshipsId);
-            return StatusCode(200, _mapper.Map<MatchDto>(matchs));
+            return StatusCode(200, _mapper.Map<IEnumerable<MatchDto>>(matchs));
         }
     }
 }

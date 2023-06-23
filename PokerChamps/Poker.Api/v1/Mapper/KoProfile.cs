@@ -13,8 +13,8 @@ public class KoProfile : Profile
         // ShouldMapProperty = info => info.GetMethod.IsPublic || info.GetMethod.IsAssembly; 
         
         CreateMap<KoDto, Ko>(MemberList.None)
-            .ForMember(d => d.Maker, o => o.MapFrom(x => x.Makers))
-            .ForMember(d => d.Receiver, o => o.MapFrom(x => x.Receivers))
+            .ForMember(d => d.Makers, o => o.MapFrom(x => x.Makers))
+            .ForMember(d => d.Receivers, o => o.MapFrom(x => x.Receivers))
             .ReverseMap();
     }
 }

@@ -55,8 +55,8 @@ namespace Poker.Api.v1.Controllers.Config
         [HttpGet("{id}")]
         public async Task<ObjectResult> Get(string id)
         {
-            var configsEnumerable = await _queryService.Get(x => x.Id == id);
-            return StatusCode(200, _mapper.Map<ConfigsDto>(configsEnumerable));
+            var configs = await _queryService.Get(x => x.Id == id);
+            return StatusCode(200, _mapper.Map<ConfigsDto>(configs));
         }
     }
 }
