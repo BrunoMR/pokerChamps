@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Championship;
+using Poker.Api.v1.Dtos.Championship.Ranking;
 using Poker.Domain.Entities.Championship;
 using Poker.Domain.Services.Championship.Interfaces;
 using Poker.Domain.Services.Shared.Interfaces;
@@ -63,6 +64,13 @@ namespace Poker.Api.v1.Controllers.Championship
         {
             var championshipsEnumerable = await _championshipService.GetList(_mapper.Map<Championships>(championshipsDto));
             return StatusCode(200, _mapper.Map<IEnumerable<ChampionshipsDto>>(championshipsEnumerable));
+        }
+        
+        [HttpGet("Ranking/{id}")]
+        public async Task<ObjectResult> GetRanking(string id)
+        {
+            var championshipsEnumerable = await _championshipService.GetRanking(id);
+            return StatusCode(200, _mapper.Map<IEnumerable<PlayersChampionshipRankingDto>>(championshipsEnumerable));
         }
     }
 }
