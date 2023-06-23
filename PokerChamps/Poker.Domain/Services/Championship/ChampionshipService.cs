@@ -42,29 +42,15 @@ public class ChampionshipService : IChampionshipService
         var playerMatches = matches
             .SelectMany(m => m.Players)
             .GroupBy(g => g.PlayersId)
-            .Select(p => new PlayerMatch
-            {
-                PlayersId = p.Key,
-                Name = p.First().Name,
-                Points = p.Sum(x => x.Points),
-                Prize = p.Sum(x => x.Prize),
-                KoQuantity = p.Sum(x => x.KoQuantity),
-                RebuyQuantity = p.Sum(x => x.RebuyQuantity),
-                Charge = p.Sum(x => x.Charge)
-            }).OrderByDescending(o => o.Points);
+            .Select(p => 
+                new PlayerMatch(p.Key,p.First().Name, p.Sum(x => x.KoQuantity), 
+                p.Sum(x => x.RebuyQuantity), p.Sum(x => x.Points), null, 
+                p.Sum(x => x.Prize), p.Sum(x => x.Charge)))
+            .OrderByDescending(o => o.Points);
 
         var rowNumber = 0;
-        var ranking = playerMatches.Select(x => new PlayerMatch
-        {
-            Position = ++rowNumber,
-            PlayersId = x.PlayersId,
-            Name = x.Name,
-            Points = x.Points,
-            Prize = x.Prize,
-            KoQuantity = x.KoQuantity,
-            RebuyQuantity = x.RebuyQuantity,
-            Charge = x.Charge
-        });
+        var ranking = playerMatches.Select(x => new PlayerMatch(x.PlayersId, x.Name, x.KoQuantity,
+            x.RebuyQuantity, x.Points, ++rowNumber, x.Prize, x.Charge));
 
         return ranking;
     }

@@ -4,6 +4,21 @@ namespace Poker.Domain.Entities.Match.Value_Objects
 {
     public class PlayerMatch
     {
+        public PlayerMatch(){}
+        
+        public PlayerMatch(string playersId, string name, double koQuantity, int rebuyQuantity, double points,
+            int? position, decimal prize, decimal charge)
+        {
+            PlayersId = playersId;
+            Name = name;
+            KoQuantity = koQuantity;
+            RebuyQuantity = rebuyQuantity;
+            Points = points;
+            Position = position;
+            Prize = prize;
+            Charge = charge;
+        }
+
         public string PlayersId { get; set; }
 
         public string Name { get; set; }
