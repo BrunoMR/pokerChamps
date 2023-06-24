@@ -12,9 +12,16 @@ namespace Poker.Domain.Entities.Championship
 
         public DateOnly? DateFinal { get; set; }
 
+        public decimal PrizePool { get; set; }
+
         public void SetId(string id)
         {
             Id = id;
+        }
+
+        public void UpdatePrizePool(decimal cash)
+        {
+            PrizePool += cash;
         }
     }
 }

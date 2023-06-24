@@ -4,6 +4,7 @@ using Poker.Domain.Entities.Match.Value_Objects;
 using Poker.Domain.Extensions;
 using Poker.Domain.Services.Championship.Interfaces;
 using Poker.Domain.Services.Config.Interfaces;
+using Poker.Domain.Services.Shared.Interfaces;
 
 namespace Poker.Domain.Services.Championship;
 
@@ -11,12 +12,15 @@ public class ChampionshipService : IChampionshipService
 {
     private readonly IQueryService<Championships> _queryService;
     private readonly IQueryService<Entities.Match.Match> _matchQueryService;
+    private readonly IUpInsertService<Championships> _upInsertService;
 
     public ChampionshipService(IQueryService<Championships> queryService,
-        IQueryService<Entities.Match.Match> matchQueryService)
+        IQueryService<Entities.Match.Match> matchQueryService,
+        IUpInsertService<Championships> upInsertService)
     {
         _queryService = queryService;
         _matchQueryService = matchQueryService;
+        _upInsertService = upInsertService;
     }
 
     public async Task<Championships> Get(Expression<Func<Championships, bool>> predicate)
@@ -53,5 +57,13 @@ public class ChampionshipService : IChampionshipService
             x.RebuyQuantity, x.Points, ++rowNumber, x.Prize, x.Charge));
 
         return ranking;
+    }
+
+    public async Task<(bool success, string reason)> UpdatePrizePool(Entities.Match.Match match)
+    {
+        var championship = await _queryService.Get(x => x.Id == match.ChampionshipId);
+        
+        championship.UpdatePrizePool(match.CashBoxSave);
+        return await _upInsertService.Update(championship);
     }
 }

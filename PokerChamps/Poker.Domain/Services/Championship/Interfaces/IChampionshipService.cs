@@ -13,4 +13,6 @@ public interface IChampionshipService
     Task<IEnumerable<Championships>> GetList(Championships championships);
     
     Task<IEnumerable<PlayerMatch>> GetRanking(string id);
+
+    Task<(bool success, string reason)> UpdatePrizePool(Entities.Match.Match match);
 }
