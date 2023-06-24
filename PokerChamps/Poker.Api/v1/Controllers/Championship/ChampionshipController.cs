@@ -70,7 +70,7 @@ namespace Poker.Api.v1.Controllers.Championship
         public async Task<ObjectResult> GetRanking(string id)
         {
             var championshipsEnumerable = await _championshipService.GetRanking(id);
-            return StatusCode(200, _mapper.Map<IEnumerable<PlayersChampionshipRankingDto>>(championshipsEnumerable));
+            return StatusCode(200, _mapper.Map<ChampionshipRankingModelDto>(championshipsEnumerable));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Poker.Domain.Entities.Championship;
-using Poker.Domain.Entities.Match.Value_Objects;
+using Poker.Domain.Entities.Championship.Model;
 
 namespace Poker.Domain.Services.Championship.Interfaces;
 
@@ -12,7 +12,7 @@ public interface IChampionshipService
     
     Task<IEnumerable<Championships>> GetList(Championships championships);
     
-    Task<IEnumerable<PlayerMatch>> GetRanking(string id);
+    Task<ChampionshipRankingModel> GetRanking(string id);
 
     Task<(bool success, string reason)> UpdatePrizePool(Entities.Match.Match match);
 }
