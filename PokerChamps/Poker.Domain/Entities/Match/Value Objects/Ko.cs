@@ -1,15 +1,18 @@
-﻿using Poker.Domain.Entities.Player;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Poker.Domain.Entities.Player;
 
 namespace Poker.Domain.Entities.Match.Value_Objects
 {
     public class Ko
     {
-        public IEnumerable<Players> Makers { get; set; }
+        [BsonElement("Makers")]
+        public IEnumerable<Players> Makers { get; private set; }
 
-        //todo: remove set
-        public double PointsByMaker { get; set; }
+        [BsonElement("PointsByMaker")]
+        public double PointsByMaker { get; private set; }
 
-        public IEnumerable<Players> Receivers { get; set; }
+        [BsonElement("Receivers")]
+        public IEnumerable<Players> Receivers { get; private set; }
 
         public void SetPointsByMaker(double points)
         {

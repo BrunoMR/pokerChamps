@@ -1,11 +1,14 @@
-﻿using Poker.Domain.Enums;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Poker.Domain.Enums;
 
 namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class HandsPoints
     {
-        public HandsEnum Type { get; set; }
+        [BsonElement("Type")]
+        public HandsEnum Type { get; private set; }
 
-        public int Value { get; set; }
+        [BsonElement("Value")]
+        public int Value { get; private set; }
     }
 }

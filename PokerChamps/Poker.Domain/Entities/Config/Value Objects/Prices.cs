@@ -1,11 +1,16 @@
-﻿namespace Poker.Domain.Entities.Config.Value_Objects
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class Prices
     {
-        public decimal CashBox { get; set; }
-        
-        public decimal BuyIn { get; set; }
+        [BsonElement("CashBox")] 
+        public decimal CashBox { get; private set; }
 
-        public decimal Rebuy { get; set; }
+        [BsonElement("BuyIn")] 
+        public decimal BuyIn { get; private set; }
+
+        [BsonElement("Rebuy")] 
+        public decimal Rebuy { get; private set; }
     }
 }

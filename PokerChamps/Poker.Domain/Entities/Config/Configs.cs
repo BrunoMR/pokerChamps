@@ -1,17 +1,22 @@
-﻿using Poker.Domain.Entities.Base;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Poker.Domain.Entities.Base;
 using Poker.Domain.Entities.Config.Value_Objects;
 
 namespace Poker.Domain.Entities.Config
 {
     public class Configs : Entity
     {
-        public Points Points { get; set; }
+        [BsonElement("Points")]
+        public Points Points { get; private set; }
 
-        public Prices Prices { get; set; }
+        [BsonElement("Prices")]
+        public Prices Prices { get; private set; }
 
-        public List<TurnBlinds> TurnBlinds { get; set; }
+        [BsonElement("TurnBlinds")]
+        public List<TurnBlinds> TurnBlinds { get; private set; }
         
-        public List<Prizes> Prizes { get; set; }
+        [BsonElement("Prizes")]
+        public List<Prizes> Prizes { get; private set; }
 
         public void SetId(string id)
         {

@@ -1,18 +1,24 @@
-﻿using Poker.Domain.Entities.Base;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Poker.Domain.Entities.Base;
 
 namespace Poker.Domain.Entities.Championship
 {
     public class Championships : Entity
     {
-        public string? Name { get; set; }
+        [BsonElement("Name")]
+        public string? Name { get; private set; }
 
-        public bool IsOpen { get; set; }
+        [BsonElement("IsOpen")]
+        public bool IsOpen { get; private set; }
 
-        public DateOnly? DateInitial { get; set; }
+        [BsonElement("DateInitial")]
+        public DateOnly? DateInitial { get; private set; }
 
-        public DateOnly? DateFinal { get; set; }
+        [BsonElement("DateFinal")]
+        public DateOnly? DateFinal { get; private set; }
 
-        public decimal PrizePool { get; set; }
+        [BsonElement("PrizePool")]
+        public decimal PrizePool { get; private set; }
 
         public void SetId(string id)
         {

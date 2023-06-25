@@ -1,9 +1,13 @@
-﻿namespace Poker.Domain.Entities.Config.Value_Objects
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class PodiumPosition
     {
-        public int Position { get; set; }
+        [BsonElement("Position")]
+        public int Position { get; private set; }
 
-        public int Points { get; set; }
+        [BsonElement("Points")]
+        public int Points { get; private set; }
     }
 }

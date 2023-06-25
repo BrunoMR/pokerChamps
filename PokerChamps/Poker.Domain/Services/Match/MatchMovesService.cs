@@ -26,11 +26,12 @@ public class MatchMovesService : IMatchMovesService
     public async Task<(bool success, string reason)> NewKo(Ko ko, string matchId)
     {
         var (match, config) = await getMatchAndConfig(matchId);
-        var matchIsValid = validateMatch(match);
-
-        if (!matchIsValid.Item1)
-            return matchIsValid;
         
+        if (match is null || !match.IsOpen)
+        {
+            return (false, "Jogo não encontrado ou já encerrado!");
+        }
+
         ko.SetPointsByMaker(config.Points.Ko.Maker);
         match.AddKo(ko);
 
@@ -48,11 +49,12 @@ public class MatchMovesService : IMatchMovesService
     public async Task<(bool success, string reason)> NewRebuys(IEnumerable<Players> players, string matchId)
     {
         var (match, config) = await getMatchAndConfig(matchId);
-        var matchIsValid = validateMatch(match);
 
-        if (!matchIsValid.Item1)
-            return matchIsValid;
-        
+        if (match is null || !match.IsOpen)
+        {
+            return (false, "Jogo não encontrado ou já encerrado!");
+        }
+
         match.AddRebuy(players.Count(), config.Prices.Rebuy);
         match.CalculateNetValue(config.Prices.CashBox);
 
@@ -70,11 +72,12 @@ public class MatchMovesService : IMatchMovesService
         string matchId)
     {
         var (match, config) = await getMatchAndConfig(matchId);
-        var matchIsValid = validateMatch(match);
 
-        if (!matchIsValid.Item1)
-            return matchIsValid;
-        
+        if (match is null || !match.IsOpen)
+        {
+            return (false, "Jogo não encontrado ou já encerrado!");
+        }
+
         var pointsToAdd = config.Points.HandsPoints.FirstOrDefault(x => x.Type == playerSpecialHand.HandsEnum).Value;
 
         match.Players
@@ -90,10 +93,5 @@ public class MatchMovesService : IMatchMovesService
         var match = await _matchQueryService.Get(x => x.Id == matchId);
         var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
         return (match, config);
-    }
-    
-    private (bool, string) validateMatch(Entities.Match.Match match)
-    {
-        return match is null ? (false, "Jogo não encontrado ou já encerrado!") : (true, string.Empty);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Poker.Domain.Enums;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Poker.Domain.Enums;
 
 namespace Poker.Domain.Entities.Match.Value_Objects
 {
@@ -23,26 +24,26 @@ namespace Poker.Domain.Entities.Match.Value_Objects
 
         public string Name { get; set; }
 
-        //todo: remove set
-        public double KoQuantity { get; set; }
+        [BsonElement("KoQuantity")]
+        public double KoQuantity { get; private set; }
 
-        //todo: remove set
-        public int RebuyQuantity { get; set; }
+        [BsonElement("RebuyQuantity")]
+        public int RebuyQuantity { get; private set; }
 
-        //todo: remove set
-        public IList<Hand> SpecialHands { get; set; }
+        [BsonElement("SpecialHands")]
+        public IList<Hand> SpecialHands { get; private set; }
 
-        //todo: remove set
-        public double Points { get; set; }
+        [BsonElement("Points")]
+        public double Points { get; private set; }
 
-        //todo: remove set
-        public int? Position { get; set; }
+        [BsonElement("Position")]
+        public int? Position { get; private set; }
 
-        //todo: remove set
-        public decimal Prize { get; set; }
+        [BsonElement("Prize")]
+        public decimal Prize { get; private set; }
 
-        //todo: remove set
-        public decimal Charge { get; set; }
+        [BsonElement("Charge")]
+        public decimal Charge { get; private set; }
 
         public void AddKo(double pointsToAdd, int koQuantity)
         {

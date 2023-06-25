@@ -45,10 +45,11 @@ public class MatchService : IMatchService
         string matchId)
     {
         var (match, config) = await getMatchAndConfig(matchId);
-        var matchIsValid = validateMatch(match);
-
-        if (!matchIsValid.Item1)
-            return matchIsValid;
+        
+        if (match is null || !match.IsOpen)
+        {
+            return (false, "Jogo não encontrado ou já encerrado!");
+        }
 
         foreach (var player in playersMatch)
         {
@@ -66,10 +67,11 @@ public class MatchService : IMatchService
     public async Task<(bool success, string reason)> EndGame(string id)
     {
         var (match, config) = await getMatchAndConfig(id);
-        var matchIsValid = validateMatch(match);
-
-        if (!matchIsValid.Item1)
-            return matchIsValid;
+        
+        if (match is null || !match.IsOpen)
+        {
+            return (false, "Jogo não encontrado ou já encerrado!");
+        }
 
         foreach (var award in config.Prizes)
         {
@@ -89,10 +91,5 @@ public class MatchService : IMatchService
             return (null, null);
         var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
         return (match, config);
-    }
-
-    private (bool, string) validateMatch(Entities.Match.Match match)
-    {
-        return match is null ? (false, "Jogo não encontrado ou já encerrado!") : (true, string.Empty);
     }
 }

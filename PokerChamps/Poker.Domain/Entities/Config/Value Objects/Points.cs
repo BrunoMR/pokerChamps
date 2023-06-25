@@ -1,14 +1,20 @@
-﻿namespace Poker.Domain.Entities.Config.Value_Objects
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class Points
     {
-        public double Rebuy { get; set; }
+        [BsonElement("Rebuy")]
+        public double Rebuy { get; private set; }
 
-        public List<PodiumPosition> PodiumPosition { get; set; }
+        [BsonElement("PodiumPosition")]
+        public List<PodiumPosition> PodiumPosition { get; private set; }
 
-        public KoPoints Ko { get; set; }
+        [BsonElement("Ko")]
+        public KoPoints Ko { get; private set; }
 
-        public List<HandsPoints> HandsPoints { get; set; }
+        [BsonElement("HandsPoints")]
+        public List<HandsPoints> HandsPoints { get; private set; }
 
         public Points(double rebuy)
         {

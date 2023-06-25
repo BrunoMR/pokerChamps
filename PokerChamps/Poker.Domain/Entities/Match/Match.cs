@@ -1,4 +1,5 @@
-﻿using Poker.Domain.Entities.Base;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Poker.Domain.Entities.Base;
 using Poker.Domain.Entities.Match.Value_Objects;
 
 namespace Poker.Domain.Entities.Match
@@ -11,30 +12,34 @@ namespace Poker.Domain.Entities.Match
 
         public string? ConfigId { get; set; }
 
-        //todo: remove set
-        public int BuyInQuantity { get; set; }
+        [BsonElement("BuyInQuantity")]
+        public int BuyInQuantity { get; private set; }
 
-        //todo: remove set
-        public decimal BuyInValue { get; set; }
+        [BsonElement("BuyInValue")]
+        public decimal BuyInValue { get; private set; }
 
-        //todo: remove set
-        public int RebuyQuantity { get; set; }
+        [BsonElement("RebuyQuantity")]
+        public int RebuyQuantity { get; private set; }
 
-        //todo: remove set
-        public decimal RebuyValue { get; set; }
+        [BsonElement("RebuyValue")]
+        public decimal RebuyValue { get; private set; }
 
-        public decimal GrossValue { get; set; }
+        [BsonElement("GrossValue")]
+        public decimal GrossValue { get; private set; }
 
-        public decimal CashBoxSave { get; set; }
+        [BsonElement("CashBoxSave")]
+        public decimal CashBoxSave { get; private set; }
 
-        public decimal PlaceValue { get; set; }
+        [BsonElement("PlaceValue")]
+        public decimal PlaceValue { get; private set; }
 
-        public decimal NetValue { get; set; }
+        [BsonElement("NetValue")]
+        public decimal NetValue { get; private set; }
 
         public IEnumerable<PlayerMatch>? Players { get; set; }
 
-        //todo: remove set
-        public IList<Ko>? Kos { get; set; }
+        [BsonElement("Kos")]
+        public IList<Ko>? Kos { get; private set; }
 
         public void AddBuyIn(int quantity, decimal price)
         {

@@ -1,4 +1,5 @@
-﻿using Poker.Domain.Enums;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Poker.Domain.Enums;
 
 namespace Poker.Domain.Entities.Match.Value_Objects
 {
@@ -12,9 +13,12 @@ namespace Poker.Domain.Entities.Match.Value_Objects
             Quantity += 1;
         }
         
-        public string HandsEnum { get; set; }
+        [BsonElement("HandsEnum")]
+        public string HandsEnum { get; private set; }
 
-        public int Quantity { get; set; }
+        [BsonElement("Quantity")]
+
+        public int Quantity { get; private set; }
 
         public void AddQuantity()
         {
