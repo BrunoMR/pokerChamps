@@ -5,6 +5,16 @@ namespace Poker.Domain.Entities.Championship
 {
     public class Championships : Entity
     {
+        public Championships(){}
+
+        public Championships(string name, bool isOpen, DateOnly? dateInitial, DateOnly? dateFinal)
+        {
+            Name = name;
+            IsOpen = isOpen;
+            DateInitial = dateInitial;
+            DateFinal = dateFinal;
+        }
+        
         [BsonElement("Name")]
         public string? Name { get; private set; }
 

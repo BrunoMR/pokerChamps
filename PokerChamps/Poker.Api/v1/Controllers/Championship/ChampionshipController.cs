@@ -14,16 +14,14 @@ namespace Poker.Api.v1.Controllers.Championship
     public class ChampionshipController : ControllerBase
     {
         private readonly ILogger<ChampionshipController> _logger;
-        private readonly IMapper _mapper;
         private readonly IUpInsertService<Championships> _upInsertService;
         private readonly IChampionshipService _championshipService;
 
-        public ChampionshipController(ILogger<ChampionshipController> logger, IMapper mapper, 
+        public ChampionshipController(ILogger<ChampionshipController> logger,
             IUpInsertService<Championships> upInsertService,
             IChampionshipService championshipService)
         {
             _logger = logger;
-            _mapper = mapper;
             _upInsertService = upInsertService;
             _championshipService = championshipService;
         }
@@ -31,16 +29,16 @@ namespace Poker.Api.v1.Controllers.Championship
         [HttpPost]
         public async Task<ActionResult<object>> Post([FromBody] ChampionshipsDto championshipsDto)
         {
-            var (success, reason) = await _upInsertService.Create(_mapper.Map<Championships>(championshipsDto));
+            var (success, reason) = await _upInsertService.Create(championshipsDto);
             return StatusCode(!success ? 400 : 200);
         }
-        
+
         [HttpPut("{id}")]
         public async Task<ActionResult<object>> Put([FromBody] ChampionshipsDto championshipsDto, string id)
         {
-            var championships = _mapper.Map<Championships>(championshipsDto);
+            Championships championships = championshipsDto;
             championships.SetId(id);
-            
+
             var (success, reason) = await _upInsertService.Update(championships);
             return StatusCode(!success ? 400 : 200);
         }
@@ -49,28 +47,28 @@ namespace Poker.Api.v1.Controllers.Championship
         public async Task<ObjectResult> GetAll()
         {
             var championshipsEnumerable = await _championshipService.GetList(x => x.Id != null);
-            return StatusCode(200, _mapper.Map<IEnumerable<ChampionshipsDto>>(championshipsEnumerable));
+            return StatusCode(200, championshipsEnumerable.Select(x => (ChampionshipsDto)x));
         }
-        
+
         [HttpGet("{id}")]
         public async Task<ObjectResult> Get(string id)
         {
             var championships = await _championshipService.Get(x => x.Id == id);
-            return StatusCode(200, _mapper.Map<ChampionshipsDto>(championships));
+            return StatusCode(200, (ChampionshipsDto)championships);
         }
-        
+
         [HttpPost("ByConditions")]
         public async Task<ObjectResult> AllByConditions([FromBody] ChampionshipsDto championshipsDto)
         {
-            var championshipsEnumerable = await _championshipService.GetList(_mapper.Map<Championships>(championshipsDto));
-            return StatusCode(200, _mapper.Map<IEnumerable<ChampionshipsDto>>(championshipsEnumerable));
+            var championshipsEnumerable = await _championshipService.GetList(championshipsDto);
+            return StatusCode(200, championshipsEnumerable.Select(x => (ChampionshipsDto)x));
         }
-        
+
         [HttpGet("Ranking/{id}")]
         public async Task<ObjectResult> GetRanking(string id)
         {
             var championshipsEnumerable = await _championshipService.GetRanking(id);
-            return StatusCode(200, _mapper.Map<ChampionshipRankingModelDto>(championshipsEnumerable));
+            return StatusCode(200, (ChampionshipRankingModelDto)championshipsEnumerable);
         }
     }
 }

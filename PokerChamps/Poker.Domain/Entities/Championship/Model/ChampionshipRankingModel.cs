@@ -11,6 +11,7 @@ public class ChampionshipRankingModel
         Prizes = prizes;
     }
     public IEnumerable<PlayerRankingModel> PlayersRanking { get; set; }
+    
     public decimal PrizePool { get; set; }
     
     public IEnumerable<PrizeModel> Prizes { get; set; }
