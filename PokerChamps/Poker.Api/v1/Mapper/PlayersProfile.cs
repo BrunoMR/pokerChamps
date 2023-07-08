@@ -11,7 +11,5 @@ public class PlayersProfile : Profile
     public PlayersProfile()
     {
         CreateMap<PlayerMatchCreateDto, PlayerMatch>(MemberList.None).ReverseMap();
-        
-        CreateMap<PlayersDto, Players>(MemberList.None).ReverseMap();
     }
 }
