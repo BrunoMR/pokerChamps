@@ -4,6 +4,18 @@ namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class Prices
     {
+        public Prices()
+        {
+            
+        }
+        
+        public Prices(decimal cashBox, decimal buyIn, decimal rebuy)
+        {
+            CashBox = cashBox;
+            BuyIn = buyIn;
+            Rebuy = rebuy;
+        }
+        
         [BsonElement("CashBox")] 
         public decimal CashBox { get; private set; }
 

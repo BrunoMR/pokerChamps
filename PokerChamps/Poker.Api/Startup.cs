@@ -19,9 +19,6 @@ namespace Poker.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add services to the container.
-            services.AddAutoMapper(typeof(Startup));
-            
             // Normal AddLogging
             services.AddLogging();
 
@@ -94,7 +91,6 @@ namespace Poker.Api
             });
 
             services.AddDependencies();
-            services.AddAutoMappers();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment env)

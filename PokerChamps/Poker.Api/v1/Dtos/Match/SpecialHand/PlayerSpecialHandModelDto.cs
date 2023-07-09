@@ -5,7 +5,9 @@ namespace Poker.Api.v1.Dtos.Match.SpecialHand;
 
 public class PlayerSpecialHandModelDto
 {
-    private PlayerSpecialHandModelDto(string playersId, string name, HandsEnum handsEnum)
+    public PlayerSpecialHandModelDto(){}
+    
+    public PlayerSpecialHandModelDto(string playersId, string name, HandsEnum handsEnum)
     {
         PlayersId = playersId;
         Name = name;

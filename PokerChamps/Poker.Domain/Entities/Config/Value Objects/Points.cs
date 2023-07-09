@@ -4,6 +4,25 @@ namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class Points
     {
+        public Points()
+        {
+            
+        }
+        
+        public Points(double rebuy)
+        {
+            Rebuy = rebuy;
+        }
+        
+        public Points(double rebuy, IEnumerable<PodiumPosition> podiumPosition, KoPoints ko, 
+            IEnumerable<HandsPoints> handsPoints)
+        {
+            Rebuy = rebuy;
+            PodiumPosition = podiumPosition.ToList();
+            Ko = ko;
+            HandsPoints = handsPoints.ToList();
+        }
+
         [BsonElement("Rebuy")]
         public double Rebuy { get; private set; }
 
@@ -15,11 +34,6 @@ namespace Poker.Domain.Entities.Config.Value_Objects
 
         [BsonElement("HandsPoints")]
         public List<HandsPoints> HandsPoints { get; private set; }
-
-        public Points(double rebuy)
-        {
-            Rebuy = rebuy;
-        }
 
         public void SetPodiumPostions(PodiumPosition podiumPosition)
         {

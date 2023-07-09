@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Config;
 using Poker.Domain.Entities.Config;
@@ -13,17 +12,15 @@ namespace Poker.Api.v1.Controllers.Config
     public class ConfigController : ControllerBase
     {
         private readonly ILogger<ConfigController> _logger;
-        private readonly IMapper _mapper;
-        
+
         private readonly IUpInsertService<Configs> _upInsertService;
         private readonly IQueryService<Configs> _queryService;
 
-        public ConfigController(ILogger<ConfigController> logger, IMapper mapper, 
+        public ConfigController(ILogger<ConfigController> logger, 
             IUpInsertService<Configs> upInsertService,
             IQueryService<Configs> queryService)
         {
             _logger = logger;
-            _mapper = mapper;
             _upInsertService = upInsertService;
             _queryService = queryService;
         }
@@ -31,14 +28,14 @@ namespace Poker.Api.v1.Controllers.Config
         [HttpPost]
         public async Task<ActionResult<object>> Post([FromBody] ConfigsDto configs)
         {
-            var (success, reason) = await _upInsertService.Create(_mapper.Map<Configs>(configs));
+            var (success, reason) = await _upInsertService.Create(configs);
             return StatusCode(!success ? 400 : 200);
         }
         
         [HttpPut("{id}")]
         public async Task<ActionResult<object>> Put([FromBody] ConfigsDto configsDto, string id)
         {
-            var configs = _mapper.Map<Configs>(configsDto);
+            var configs = (Configs)configsDto;
             configs.SetId(id);
             
             var (success, reason) = await _upInsertService.Update(configs);
@@ -49,14 +46,14 @@ namespace Poker.Api.v1.Controllers.Config
         public async Task<ObjectResult> GetAll()
         {
             var configsEnumerable = await _queryService.GetList(x => x.Id != null);
-            return StatusCode(200, _mapper.Map<IEnumerable<ConfigsDto>>(configsEnumerable));
+            return StatusCode(200, configsEnumerable.Select(x => (ConfigsDto)x));
         }
         
         [HttpGet("{id}")]
         public async Task<ObjectResult> Get(string id)
         {
             var configs = await _queryService.Get(x => x.Id == id);
-            return StatusCode(200, _mapper.Map<ConfigsDto>(configs));
+            return StatusCode(200, (ConfigsDto)configs);
         }
     }
 }

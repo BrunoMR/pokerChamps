@@ -4,6 +4,15 @@ namespace Poker.Domain.Entities.Config.Value_Objects
 {
     public class TurnBlinds
     {
+        public TurnBlinds(){}
+        
+        public TurnBlinds(int time, decimal blindValue, decimal bigBlindValue)
+        {
+            Time = time;
+            BlindValue = blindValue;
+            BigBlindValue = bigBlindValue;
+        }
+        
         [BsonElement("Time")]
         // in seconds
         public int Time { get; private set; }
@@ -13,12 +22,5 @@ namespace Poker.Domain.Entities.Config.Value_Objects
 
         [BsonElement("BigBlindValue")]
         public decimal BigBlindValue { get; private set; }
-
-        public TurnBlinds(int time, decimal blindValue, decimal bigBlindValue)
-        {
-            Time = time;
-            BlindValue = blindValue;
-            BigBlindValue = bigBlindValue;
-        }
     }
 }

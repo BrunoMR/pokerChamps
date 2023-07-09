@@ -8,7 +8,7 @@ public class KoDto
 {
     public KoDto() {}
     
-    private KoDto(IEnumerable<PlayersDto> makers, IEnumerable<PlayersDto> receivers)
+    public KoDto(IEnumerable<PlayersDto> makers, IEnumerable<PlayersDto> receivers)
     {
         Makers = makers;
         Receivers = receivers;

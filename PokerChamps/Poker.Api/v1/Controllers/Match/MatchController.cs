@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Match.Create;
 using Poker.Api.v1.Dtos.Match.Position;
@@ -15,16 +14,14 @@ namespace Poker.Api.v1.Controllers.Match
     public class MatchController : ControllerBase
     {
         private readonly ILogger<MatchController> _logger;
-        private readonly IMapper _mapper;
         private readonly IMatchService _matchService;
         private readonly IQueryService<Domain.Entities.Match.Match> _queryService;
 
-        public MatchController(ILogger<MatchController> logger, IMapper mapper,
+        public MatchController(ILogger<MatchController> logger,
             IMatchService matchService,
             IQueryService<Domain.Entities.Match.Match> queryService)
         {
             _logger = logger;
-            _mapper = mapper;
             _matchService = matchService;
             _queryService = queryService;
         }
@@ -41,8 +38,7 @@ namespace Poker.Api.v1.Controllers.Match
             [FromBody] IEnumerable<PlayersPositionDto> playersPositionDtos, string matchId)
         {
             var (success, reason) =
-                await _matchService.SetPlayersPosition(_mapper.Map<IEnumerable<PlayerMatch>>(playersPositionDtos),
-                    matchId);
+                await _matchService.SetPlayersPosition(playersPositionDtos.Select(x => (PlayerMatch)x), matchId);
             return StatusCode(!success ? 400 : 200);
         }
 
@@ -57,14 +53,14 @@ namespace Poker.Api.v1.Controllers.Match
         public async Task<ActionResult<object>> GetById(string id)
         {
             var match = await _queryService.Get(x => x.Id == id);
-            return StatusCode(200, _mapper.Map<MatchDto>(match));
+            return StatusCode(200, (MatchDto)match);
         }
 
         [HttpGet("byChampionshipId/{championshipsId}")]
         public async Task<ActionResult<object>> GetAllByChampionshipId(string championshipsId)
         {
             var matchs = await _queryService.GetList(x => x.ChampionshipId == championshipsId);
-            return StatusCode(200, _mapper.Map<IEnumerable<MatchDto>>(matchs));
+            return StatusCode(200, matchs.Select(x => (MatchDto)x));
         }
     }
 }

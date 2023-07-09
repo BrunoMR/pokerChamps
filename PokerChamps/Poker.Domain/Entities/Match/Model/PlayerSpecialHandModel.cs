@@ -14,9 +14,9 @@ public class PlayerSpecialHandModel
     }
 
 
-    public string PlayersId { get; set; }
+    public string PlayersId { get; private set; }
 
-    public string Name { get; set; }
+    public string Name { get; private set; }
     
-    public HandsEnum HandsEnum { get; set; }
+    public HandsEnum HandsEnum { get; private set; }
 }

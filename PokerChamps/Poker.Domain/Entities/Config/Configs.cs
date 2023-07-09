@@ -6,6 +6,21 @@ namespace Poker.Domain.Entities.Config
 {
     public class Configs : Entity
     {
+        public Configs()
+        {
+            
+        }
+        
+        public Configs(string id, Points points, Prices prices, IEnumerable<TurnBlinds> turnBlinds, 
+            IEnumerable<Prizes> prizes)
+        {
+            Id = id;
+            Points = points;
+            Prices = prices;
+            TurnBlinds = turnBlinds.ToList();
+            Prizes = prizes.ToList();
+        }
+        
         [BsonElement("Points")]
         public Points Points { get; private set; }
 
