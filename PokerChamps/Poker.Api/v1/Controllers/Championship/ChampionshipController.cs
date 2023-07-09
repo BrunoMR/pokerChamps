@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Api.v1.Dtos.Championship;
 using Poker.Api.v1.Dtos.Championship.Ranking;

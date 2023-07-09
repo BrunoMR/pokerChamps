@@ -5,6 +5,15 @@ namespace Poker.Domain.Entities.Match.Value_Objects
 {
     public class Ko
     {
+        public Ko(){}
+
+        public Ko(IEnumerable<Players> makers, IEnumerable<Players> receivers)
+        {
+            Makers = makers;
+            Receivers = receivers;
+        }
+
+
         [BsonElement("Makers")]
         public IEnumerable<Players> Makers { get; private set; }
 

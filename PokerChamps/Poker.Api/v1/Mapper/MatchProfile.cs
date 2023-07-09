@@ -14,8 +14,6 @@ public class MatchProfile : Profile
 {
     public MatchProfile()
     {
-        CreateMap<MatchCreateDto, Match>(MemberList.None).ReverseMap();
-        
         CreateMap<PlayerSpecialHandModelDto, PlayerSpecialHandModel>(MemberList.None).ReverseMap();
         
         CreateMap<PlayersPositionDto, PlayerMatch>(MemberList.None)

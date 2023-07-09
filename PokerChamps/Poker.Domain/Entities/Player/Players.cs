@@ -6,8 +6,9 @@ namespace Poker.Domain.Entities.Player
     {
         public Players(){}
         
-        public Players(string name)
+        public Players(string id, string name)
         {
+            Id = id;
             Name = name;
         }
         

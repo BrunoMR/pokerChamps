@@ -19,6 +19,12 @@ namespace Poker.Domain.Entities.Match.Value_Objects
             Prize = prize;
             Charge = charge;
         }
+        
+        public PlayerMatch(string playersId, string name)
+        {
+            PlayersId = playersId;
+            Name = name;
+        }
 
         public string PlayersId { get; set; }
 

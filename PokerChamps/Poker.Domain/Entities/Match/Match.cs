@@ -6,6 +6,15 @@ namespace Poker.Domain.Entities.Match
 {
     public class Match : Entity
     {
+        public Match(){}
+
+        public Match(string? championshipId, string configId, IEnumerable<PlayerMatch> players)
+        {
+            ChampionshipId = championshipId;
+            ConfigId = configId;
+            Players = players;
+        }
+
         public bool IsOpen { get; set; } = true;
         
         public string? ChampionshipId { get; set; }

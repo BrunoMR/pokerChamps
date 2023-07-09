@@ -16,7 +16,7 @@ public class PlayersDto
     
     public static implicit operator Players(PlayersDto dto)
     {
-        return new Players(dto.Name);
+        return new Players(dto.Id, dto.Name);
     }
         
     public static implicit operator PlayersDto(Players domain)
