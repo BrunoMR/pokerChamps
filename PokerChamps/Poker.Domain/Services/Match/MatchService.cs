@@ -31,7 +31,8 @@ public class MatchService : IMatchService
         var config = await _configsQueryService.Get(x => x.Id == match.ConfigId);
 
         match.AddBuyIn(match.Players.Count(), config.Prices.BuyIn);
-        match.CalculateNetValue(config.Prices.CashBox);
+        match.CalculateCashBox(config.Prices.CashBox);
+        match.CalculateNetValue();
 
         foreach (var matchPlayer in match.Players)
         {

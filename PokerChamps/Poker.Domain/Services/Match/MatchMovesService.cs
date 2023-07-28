@@ -56,7 +56,7 @@ public class MatchMovesService : IMatchMovesService
         }
 
         match.AddRebuy(players.Count(), config.Prices.Rebuy);
-        match.CalculateNetValue(config.Prices.CashBox);
+        match.CalculateNetValue();
 
         foreach (var player in players)
         {

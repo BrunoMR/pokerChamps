@@ -71,9 +71,13 @@ namespace Poker.Domain.Entities.Match
             AddToGrossValue(quantity * rebuyPrice);
         }
 
-        public void CalculateNetValue(decimal percentCashBox)
+        public void CalculateCashBox(decimal valuePerPlayer)
         {
-            CashBoxSave = GrossValue * percentCashBox / 100;
+            if (Players != null) 
+                CashBoxSave = Players.Count() * valuePerPlayer;
+        }
+        public void CalculateNetValue()
+        {
             NetValue = GrossValue - (CashBoxSave + PlaceValue);
         }
 
